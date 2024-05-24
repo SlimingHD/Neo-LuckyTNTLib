@@ -43,7 +43,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class LuckyTNTLib
 {
     public static final String MODID = "luckytntlib";
-    public static final DeferredRegister<EntityType<?>> test = DeferredRegister.create(Registries.ENTITY_TYPE, MODID);
     public LuckyTNTLib(IEventBus bus, ModContainer container) {
         bus.addListener(this::commonSetup);
         LuckyTNTLibConfigs.registerCommonConfig(container);
