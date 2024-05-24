@@ -1,11 +1,11 @@
 package luckytntlib.item;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
 import luckytntlib.entity.LExplosiveProjectile;
-import luckytntlib.registry.DeferredEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,10 +32,10 @@ import net.minecraft.world.phys.Vec3;
 public class LDynamiteItem extends Item{
 	
 	@Nullable
-	protected DeferredEntity<EntityType<LExplosiveProjectile>> dynamite;
+	protected Supplier<EntityType<LExplosiveProjectile>> dynamite;
 	protected Random random = new Random();
 	
-	public LDynamiteItem(Item.Properties properties, @Nullable DeferredEntity<EntityType<LExplosiveProjectile>> dynamite) {
+	public LDynamiteItem(Item.Properties properties, @Nullable Supplier<EntityType<LExplosiveProjectile>> dynamite) {
 		super(properties);
 		this.dynamite = dynamite;
 	}

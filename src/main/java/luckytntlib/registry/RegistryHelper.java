@@ -48,7 +48,7 @@ public class RegistryHelper {
 	
 	private final DeferredRegister.Blocks blockRegistry;
 	private final DeferredRegister.Items itemRegistry;
-	private final DeferredEntityRegister entityRegistry;
+	private final DeferredRegister<EntityType<?>> entityRegistry;
 	
 	/**
 	 * {@link HashMap}, with strings as keys, of Lists of all registered TNT blocks.
@@ -91,7 +91,7 @@ public class RegistryHelper {
 	 * @param itemRegistry  the {@link DeferredRegister} in which all items get registered if not stated otherwise
 	 * @param entityRegistry  the {@link DeferredRegister} in which all entities get registered if not stated otherwise
 	 */
-	public RegistryHelper(DeferredRegister.Blocks blockRegistry, DeferredRegister.Items itemRegistry, DeferredEntityRegister entityRegistry) {
+	public RegistryHelper(DeferredRegister.Blocks blockRegistry, DeferredRegister.Items itemRegistry, DeferredRegister<EntityType<?>> entityRegistry) {
 		this.blockRegistry = blockRegistry;
 		this.itemRegistry = itemRegistry;
 		this.entityRegistry = entityRegistry;
@@ -104,7 +104,7 @@ public class RegistryHelper {
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#TNTLists} and {@link RegistryHelper#creativeTabItemLists}
 	 * @return {@link RegistryObject} of a {@link LTNTBlock}
 	 */
-	public DeferredBlock<LTNTBlock> registerTNTBlock(String registryName, DeferredEntity<EntityType<PrimedLTNT>> TNT, String tab){
+	public DeferredBlock<LTNTBlock> registerTNTBlock(String registryName, Supplier<EntityType<PrimedLTNT>> TNT, String tab){
 		return registerTNTBlock(registryName, TNT, tab, MapColor.COLOR_RED, true);
 	}
 	
@@ -116,7 +116,7 @@ public class RegistryHelper {
 	 * @param randomizedFuseUponExploded  whether or not the TNT should have a random fuse based upon the default fuse when removed by another explosion
 	 * @return {@link RegistryObject} of a {@link LTNTBlock}
 	 */
-	public DeferredBlock<LTNTBlock> registerTNTBlock(String registryName, DeferredEntity<EntityType<PrimedLTNT>> TNT, String tab, boolean randomizedFuseUponExploded){
+	public DeferredBlock<LTNTBlock> registerTNTBlock(String registryName, Supplier<EntityType<PrimedLTNT>> TNT, String tab, boolean randomizedFuseUponExploded){
 		return registerTNTBlock(registryName, TNT, tab, MapColor.COLOR_RED, randomizedFuseUponExploded);
 	}
 	
@@ -129,7 +129,7 @@ public class RegistryHelper {
 	 * @param randomizedFuseUponExploded  whether or not the TNT should have a random fuse based upon the default fuse when removed by another explosion
 	 * @return {@link RegistryObject} of a {@link LTNTBlock}
 	 */
-	public DeferredBlock<LTNTBlock> registerTNTBlock(String registryName, DeferredEntity<EntityType<PrimedLTNT>> TNT, String tab, MapColor color, boolean randomizedFuseUponExploded){
+	public DeferredBlock<LTNTBlock> registerTNTBlock(String registryName, Supplier<EntityType<PrimedLTNT>> TNT, String tab, MapColor color, boolean randomizedFuseUponExploded){
 		return registerTNTBlock(TNT, new TNTBlockRegistryData.Builder(registryName).tab(tab).color(color).randomizedFuseUponExploded(randomizedFuseUponExploded).build());
 	}
 	
@@ -139,7 +139,7 @@ public class RegistryHelper {
 	 * @param blockData  all the information that a TNT block may need, e.g. registry name and color, contained in an object
 	 * @return {@link RegistryObject} of a {@link LTNTBlock}
 	 */
-	public DeferredBlock<LTNTBlock> registerTNTBlock(DeferredEntity<EntityType<PrimedLTNT>> TNT, TNTBlockRegistryData blockData){
+	public DeferredBlock<LTNTBlock> registerTNTBlock(Supplier<EntityType<PrimedLTNT>> TNT, TNTBlockRegistryData blockData){
 		return registerTNTBlock(blockRegistry, itemRegistry, () -> new LTNTBlock(BlockBehaviour.Properties.of().mapColor(blockData.getColor()).sound(SoundType.GRASS), TNT, blockData.randomizedFuseUponExploded()), blockData);
 	}
 	
@@ -191,7 +191,7 @@ public class RegistryHelper {
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#TNTLists} and {@link RegistryHelper#creativeTabItemLists}
 	 * @return {@link RegistryObject} of a {@link LTNTBlock}
 	 */
-	public DeferredBlock<LTNTBlock> registerLivingTNTBlock(String registryName, DeferredEntity<EntityType<LivingPrimedLTNT>> TNT, String tab){
+	public DeferredBlock<LTNTBlock> registerLivingTNTBlock(String registryName, Supplier<EntityType<LivingPrimedLTNT>> TNT, String tab){
 		return registerLivingTNTBlock(registryName, TNT, tab, MapColor.COLOR_RED, true);
 	}
 	
@@ -203,7 +203,7 @@ public class RegistryHelper {
 	 * @param randomizedFuseUponExploded  whether or not the TNT should have a random fuse based upon the default fuse when removed by another explosion
 	 * @return {@link RegistryObject} of a {@link LTNTBlock}
 	 */
-	public DeferredBlock<LTNTBlock> registerLivingTNTBlock(String registryName, DeferredEntity<EntityType<LivingPrimedLTNT>> TNT, String tab, boolean randomizedFuseUponExploded){
+	public DeferredBlock<LTNTBlock> registerLivingTNTBlock(String registryName, Supplier<EntityType<LivingPrimedLTNT>> TNT, String tab, boolean randomizedFuseUponExploded){
 		return registerLivingTNTBlock(registryName, TNT, tab, MapColor.COLOR_RED, randomizedFuseUponExploded);
 	}
 	
@@ -216,7 +216,7 @@ public class RegistryHelper {
 	 * @param randomizedFuseUponExploded  whether or not the TNT should have a random fuse based upon the default fuse when removed by another explosion
 	 * @return {@link RegistryObject} of a {@link LTNTBlock}
 	 */
-	public DeferredBlock<LTNTBlock> registerLivingTNTBlock(String registryName, DeferredEntity<EntityType<LivingPrimedLTNT>> TNT, String tab, MapColor color, boolean randomizedFuseUponExploded){
+	public DeferredBlock<LTNTBlock> registerLivingTNTBlock(String registryName, Supplier<EntityType<LivingPrimedLTNT>> TNT, String tab, MapColor color, boolean randomizedFuseUponExploded){
 		return registerLivingTNTBlock(TNT, new TNTBlockRegistryData.Builder(registryName).tab(tab).color(color).randomizedFuseUponExploded(randomizedFuseUponExploded).build());
 	}
 	
@@ -226,7 +226,7 @@ public class RegistryHelper {
 	 * @param blockData  all the information that a TNT block may need, e.g. registry name and color, contained in an object
 	 * @return {@link RegistryObject} of a {@link LTNTBlock}
 	 */
-	public DeferredBlock<LTNTBlock> registerLivingTNTBlock(DeferredEntity<EntityType<LivingPrimedLTNT>> TNT, TNTBlockRegistryData blockData){
+	public DeferredBlock<LTNTBlock> registerLivingTNTBlock(Supplier<EntityType<LivingPrimedLTNT>> TNT, TNTBlockRegistryData blockData){
 		return registerLivingTNTBlock(blockRegistry, itemRegistry, () -> new LivingLTNTBlock(BlockBehaviour.Properties.of().mapColor(blockData.getColor()).sound(SoundType.GRASS), TNT, blockData.randomizedFuseUponExploded()), blockData);
 	}
 	
@@ -301,7 +301,7 @@ public class RegistryHelper {
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#dynamiteLists} and {@link RegistryHelper#creativeTabItemLists}
 	 * @return {@link RegistryObject} of a {@link LDynamiteItem}
 	 */
-	public DeferredItem<LDynamiteItem> registerDynamiteItem(String registryName, DeferredEntity<EntityType<LExplosiveProjectile>> dynamite, String tab){
+	public DeferredItem<LDynamiteItem> registerDynamiteItemViaProjectile(String registryName, Supplier<EntityType<LExplosiveProjectile>> dynamite, String tab){
 		return registerDynamiteItem(registryName, () -> new LDynamiteItem(new Item.Properties(), dynamite), tab);
 	}
 	
@@ -342,7 +342,7 @@ public class RegistryHelper {
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#minecartLists} and {@link RegistryHelper#creativeTabItemLists}
 	 * @return {@link RegistryObject} of a {@link LTNTMinecartItem}
 	 */
-	public DeferredItem<LTNTMinecartItem> registerTNTMinecartItem(String registryName, Supplier<DeferredEntity<EntityType<LTNTMinecart>>> TNT, String tab){
+	public DeferredItem<LTNTMinecartItem> registerTNTMinecartItem(String registryName, Supplier<Supplier<EntityType<LTNTMinecart>>> TNT, String tab){
 		return registerTNTMinecartItem(registryName, () -> new LTNTMinecartItem(new Item.Properties().stacksTo(1), TNT), tab, true, true);
 	}
 	
@@ -395,7 +395,7 @@ public class RegistryHelper {
 	 * @param effect  the TNT effect this primed TNT will have
 	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link PrimedLTNT}
 	 */
-	public DeferredEntity<EntityType<PrimedLTNT>> registerTNTEntity(String registryName, PrimedTNTEffect effect){
+	public Supplier<EntityType<PrimedLTNT>> registerTNTEntity(String registryName, PrimedTNTEffect effect){
 		return registerTNTEntity(registryName, effect, 1f, true);
 	}
 	
@@ -407,7 +407,7 @@ public class RegistryHelper {
 	 * @param fireImmune whether or not this primed TNT can burn (visual only)
 	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link PrimedLTNT}
 	 */
-	public DeferredEntity<EntityType<PrimedLTNT>> registerTNTEntity(String registryName, PrimedTNTEffect effect, float size, boolean fireImmune){
+	public Supplier<EntityType<PrimedLTNT>> registerTNTEntity(String registryName, PrimedTNTEffect effect, float size, boolean fireImmune){
 		return registerTNTEntity(entityRegistry, registryName, effect, size, fireImmune);
 	}
 	
@@ -420,12 +420,12 @@ public class RegistryHelper {
 	 * @param fireImmune whether or not this primed TNT can burn (visual only)
 	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link PrimedLTNT}
 	 */
-	public DeferredEntity<EntityType<PrimedLTNT>> registerTNTEntity(DeferredEntityRegister entityRegistry, String registryName, PrimedTNTEffect effect, float size, boolean fireImmune){
+	public Supplier<EntityType<PrimedLTNT>> registerTNTEntity(DeferredRegister<EntityType<?>> entityRegistry, String registryName, PrimedTNTEffect effect, float size, boolean fireImmune){
 		if(fireImmune) {
-			return entityRegistry.registerEntity(registryName, () -> EntityType.Builder.<PrimedLTNT>of((EntityType<PrimedLTNT> type, Level level) -> new PrimedLTNT(type, level, effect), MobCategory.MISC).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).fireImmune().sized(size, size).build(registryName));
+			return entityRegistry.register(registryName, () -> EntityType.Builder.<PrimedLTNT>of((EntityType<PrimedLTNT> type, Level level) -> new PrimedLTNT(type, level, effect), MobCategory.MISC).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).fireImmune().sized(size, size).build(registryName));
 		}
 		else {
-			return entityRegistry.registerEntity(registryName, () -> EntityType.Builder.<PrimedLTNT>of((EntityType<PrimedLTNT> type, Level level) -> new PrimedLTNT(type, level, effect), MobCategory.MISC).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).sized(size, size).build(registryName));			
+			return entityRegistry.register(registryName, () -> EntityType.Builder.<PrimedLTNT>of((EntityType<PrimedLTNT> type, Level level) -> new PrimedLTNT(type, level, effect), MobCategory.MISC).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).sized(size, size).build(registryName));			
 		}
 	}
 		
@@ -436,8 +436,8 @@ public class RegistryHelper {
 	 * @param TNT  the primed TNT that is being registered
 	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link PrimedLTNT}
 	 */
-	public DeferredEntity<EntityType<PrimedLTNT>> registerTNTEntity(DeferredEntityRegister entityRegistry, String registryName, Supplier<EntityType<PrimedLTNT>> TNT){
-		return entityRegistry.registerEntity(registryName, TNT);
+	public Supplier<EntityType<PrimedLTNT>> registerTNTEntity(DeferredRegister<EntityType<?>> entityRegistry, String registryName, Supplier<EntityType<PrimedLTNT>> TNT){
+		return entityRegistry.register(registryName, TNT);
 	}
 	
 	/**
@@ -447,7 +447,7 @@ public class RegistryHelper {
 	 * @param pickItem  the minecart item that is gotten when this minecart is middle-clicked
 	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LTNTMinecart}
 	 */
-	public DeferredEntity<EntityType<LTNTMinecart>> registerTNTMinecart(String registryName, DeferredEntity<EntityType<PrimedLTNT>> TNT, Supplier<DeferredItem<LTNTMinecartItem>> pickItem){
+	public Supplier<EntityType<LTNTMinecart>> registerTNTMinecart(String registryName, Supplier<EntityType<PrimedLTNT>> TNT, Supplier<DeferredItem<LTNTMinecartItem>> pickItem){
 		return registerTNTMinecart(registryName, TNT, pickItem, true);
 	}
 	
@@ -459,7 +459,7 @@ public class RegistryHelper {
 	 * @param explodesInstantly  whether or not this minecart will fuse or explode immediately
 	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LTNTMinecart}
 	 */
-	public DeferredEntity<EntityType<LTNTMinecart>> registerTNTMinecart(String registryName, DeferredEntity<EntityType<PrimedLTNT>> TNT, Supplier<DeferredItem<LTNTMinecartItem>> pickItem, boolean explodesInstantly){
+	public Supplier<EntityType<LTNTMinecart>> registerTNTMinecart(String registryName, Supplier<EntityType<PrimedLTNT>> TNT, Supplier<DeferredItem<LTNTMinecartItem>> pickItem, boolean explodesInstantly){
 		return registerTNTMinecart(entityRegistry, registryName, TNT, pickItem, explodesInstantly);
 	}
 	
@@ -472,8 +472,8 @@ public class RegistryHelper {
 	 * @param explodesInstantly  whether or not this minecart will fuse or explode immediately
 	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LTNTMinecart}
 	 */
-	public DeferredEntity<EntityType<LTNTMinecart>> registerTNTMinecart(DeferredEntityRegister entityRegistry, String registryName, DeferredEntity<EntityType<PrimedLTNT>> TNT, Supplier<DeferredItem<LTNTMinecartItem>> pickItem, boolean explodesInstantly){		
-		return entityRegistry.registerEntity(registryName, () -> EntityType.Builder.<LTNTMinecart>of((EntityType<LTNTMinecart> type, Level level) -> new LTNTMinecart(type, level, TNT, pickItem, explodesInstantly), MobCategory.MISC).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).sized(0.98f, 0.7f).build(registryName));
+	public Supplier<EntityType<LTNTMinecart>> registerTNTMinecart(DeferredRegister<EntityType<?>> entityRegistry, String registryName, Supplier<EntityType<PrimedLTNT>> TNT, Supplier<DeferredItem<LTNTMinecartItem>> pickItem, boolean explodesInstantly){		
+		return entityRegistry.register(registryName, () -> EntityType.Builder.<LTNTMinecart>of((EntityType<LTNTMinecart> type, Level level) -> new LTNTMinecart(type, level, TNT, pickItem, explodesInstantly), MobCategory.MISC).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).sized(0.98f, 0.7f).build(registryName));
 	}
 	
 	/**
@@ -483,8 +483,8 @@ public class RegistryHelper {
 	 * @param minecart  the minecart that is being registered
 	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LTNTMinecart}
 	 */
-	public DeferredEntity<EntityType<LTNTMinecart>> registerTNTMinecart(DeferredEntityRegister entityRegistry, String registryName, Supplier<EntityType<LTNTMinecart>> minecart){		
-		return entityRegistry.registerEntity(registryName, minecart);
+	public Supplier<EntityType<LTNTMinecart>> registerTNTMinecart(DeferredRegister<EntityType<?>> entityRegistry, String registryName, Supplier<EntityType<LTNTMinecart>> minecart){		
+		return entityRegistry.register(registryName, minecart);
 	}
 	
 	/**
@@ -495,7 +495,7 @@ public class RegistryHelper {
 	 * @param fireImmune  whether or not this living primed TNT can burn (visual only)
 	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LivingPrimedLTNT}
 	 */
-	public DeferredEntity<EntityType<LivingPrimedLTNT>> registerLivingTNTEntity(String registryName, Supplier<EntityType<LivingPrimedLTNT>> TNT){
+	public Supplier<EntityType<LivingPrimedLTNT>> registerLivingTNTEntity(String registryName, Supplier<EntityType<LivingPrimedLTNT>> TNT){
 		return registerLivingTNTEntity(entityRegistry, registryName, TNT);
 	}
 	
@@ -506,8 +506,8 @@ public class RegistryHelper {
 	 * @param TNT  the TNT that is being registered
 	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LivingPrimedLTNT}
 	 */
-	public DeferredEntity<EntityType<LivingPrimedLTNT>> registerLivingTNTEntity(DeferredEntityRegister entityRegistry, String registryName, Supplier<EntityType<LivingPrimedLTNT>> TNT){
-		return entityRegistry.registerEntity(registryName, TNT);
+	public Supplier<EntityType<LivingPrimedLTNT>> registerLivingTNTEntity(DeferredRegister<EntityType<?>> entityRegistry, String registryName, Supplier<EntityType<LivingPrimedLTNT>> TNT){
+		return entityRegistry.register(registryName, TNT);
 	}
 	
 	/**
@@ -516,7 +516,7 @@ public class RegistryHelper {
 	 * @param effect  the TNT effect this explosive projectile will have
 	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LExplosiveProjectile}
 	 */
-	public DeferredEntity<EntityType<LExplosiveProjectile>> registerExplosiveProjectile(String registryName, PrimedTNTEffect effect){
+	public Supplier<EntityType<LExplosiveProjectile>> registerExplosiveProjectile(String registryName, PrimedTNTEffect effect){
 		return registerExplosiveProjectile(registryName, effect, 1f, false);
 	}
 	
@@ -528,7 +528,7 @@ public class RegistryHelper {
 	 * @param fireImmune  whether or not this explosive projectile can burn (visual only)
 	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LExplosiveProjectile}
 	 */
-	public DeferredEntity<EntityType<LExplosiveProjectile>> registerExplosiveProjectile(String registryName, PrimedTNTEffect effect, float size, boolean fireImmune) {
+	public Supplier<EntityType<LExplosiveProjectile>> registerExplosiveProjectile(String registryName, PrimedTNTEffect effect, float size, boolean fireImmune) {
 		return registerExplosiveProjectile(entityRegistry, registryName, effect, size, fireImmune);
 	}
 	
@@ -541,12 +541,12 @@ public class RegistryHelper {
 	 * @param fireImmune  whether or not this explosive projectile can burn (visual only)
 	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LExplosiveProjectile}
 	 */
-	public DeferredEntity<EntityType<LExplosiveProjectile>> registerExplosiveProjectile(DeferredEntityRegister entityRegistry, String registryName, PrimedTNTEffect effect, float size, boolean fireImmune){
+	public Supplier<EntityType<LExplosiveProjectile>> registerExplosiveProjectile(DeferredRegister<EntityType<?>> entityRegistry, String registryName, PrimedTNTEffect effect, float size, boolean fireImmune){
 		if(fireImmune) {
-			return entityRegistry.registerEntity(registryName, () -> EntityType.Builder.<LExplosiveProjectile>of((EntityType<LExplosiveProjectile> type, Level level) -> new LExplosiveProjectile(type, level, effect), MobCategory.MISC).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).fireImmune().sized(size, size).build(registryName));
+			return entityRegistry.register(registryName, () -> EntityType.Builder.<LExplosiveProjectile>of((EntityType<LExplosiveProjectile> type, Level level) -> new LExplosiveProjectile(type, level, effect), MobCategory.MISC).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).fireImmune().sized(size, size).build(registryName));
 		}
 		else {
-			return entityRegistry.registerEntity(registryName, () -> EntityType.Builder.<LExplosiveProjectile>of((EntityType<LExplosiveProjectile> type, Level level) -> new LExplosiveProjectile(type, level, effect), MobCategory.MISC).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).sized(size, size).build(registryName));
+			return entityRegistry.register(registryName, () -> EntityType.Builder.<LExplosiveProjectile>of((EntityType<LExplosiveProjectile> type, Level level) -> new LExplosiveProjectile(type, level, effect), MobCategory.MISC).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).sized(size, size).build(registryName));
 		}
 	}
 	
@@ -557,7 +557,7 @@ public class RegistryHelper {
 	 * @param projectile  the explosive projectile that is being registered
 	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LExplosiveProjectile}
 	 */
-	public DeferredEntity<EntityType<LExplosiveProjectile>> registerExplosiveProjectile(DeferredEntityRegister entityRegistry, String registryName, Supplier<EntityType<LExplosiveProjectile>> projectile){
-		return entityRegistry.registerEntity(registryName, projectile);
+	public Supplier<EntityType<LExplosiveProjectile>> registerExplosiveProjectile(DeferredRegister<EntityType<?>> entityRegistry, String registryName, Supplier<EntityType<LExplosiveProjectile>> projectile){
+		return entityRegistry.register(registryName, projectile);
 	}
 }

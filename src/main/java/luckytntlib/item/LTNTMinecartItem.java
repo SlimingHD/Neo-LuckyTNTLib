@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import luckytntlib.entity.LTNTMinecart;
-import luckytntlib.registry.DeferredEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
@@ -33,9 +32,9 @@ import net.minecraft.world.level.gameevent.GameEvent;
  */
 public class LTNTMinecartItem extends MinecartItem {
 
-	@Nullable Supplier<DeferredEntity<EntityType<LTNTMinecart>>> minecart;
+	@Nullable Supplier<Supplier<EntityType<LTNTMinecart>>> minecart;
 	
-	public LTNTMinecartItem(Item.Properties properties, @Nullable Supplier<DeferredEntity<EntityType<LTNTMinecart>>> minecart) {
+	public LTNTMinecartItem(Item.Properties properties, @Nullable Supplier<Supplier<EntityType<LTNTMinecart>>> minecart) {
 		super(AbstractMinecart.Type.TNT, properties);
 		this.minecart = minecart;
 	}

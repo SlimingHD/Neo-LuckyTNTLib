@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import luckytntlib.item.LTNTMinecartItem;
-import luckytntlib.registry.DeferredEntity;
 import luckytntlib.util.IExplosiveEntity;
 import luckytntlib.util.tnteffects.PrimedTNTEffect;
 import net.minecraft.core.BlockPos;
@@ -47,7 +46,7 @@ public class LTNTMinecart extends Minecart implements IExplosiveEntity {
 	protected Supplier<DeferredItem<LTNTMinecartItem>> pickItem;
 	public LivingEntity placer;
 	
-	public LTNTMinecart(EntityType<LTNTMinecart> type, Level level, DeferredEntity<EntityType<PrimedLTNT>> TNT, Supplier<DeferredItem<LTNTMinecartItem>> pickItem, boolean explodeInstantly) {
+	public LTNTMinecart(EntityType<LTNTMinecart> type, Level level, Supplier<EntityType<PrimedLTNT>> TNT, Supplier<DeferredItem<LTNTMinecartItem>> pickItem, boolean explodeInstantly) {
 		super(type, level);
 		if(TNT != null) {
 			PrimedLTNT tnt = TNT.get().create(level);

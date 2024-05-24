@@ -3,11 +3,11 @@ package luckytntlib.block;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
 import luckytntlib.entity.PrimedLTNT;
-import luckytntlib.registry.DeferredEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
@@ -36,11 +36,11 @@ import net.minecraft.world.level.storage.loot.LootParams;
 public class LTNTBlock extends TntBlock{
 
 	@Nullable
-	protected DeferredEntity<EntityType<PrimedLTNT>> TNT;
+	protected Supplier<EntityType<PrimedLTNT>> TNT;
 	protected Random random = new Random();
 	protected boolean randomizedFuseUponExploded = true;
 	
-	public LTNTBlock(BlockBehaviour.Properties properties, @Nullable DeferredEntity<EntityType<PrimedLTNT>> TNT, boolean randomizedFuseUponExploded) {
+	public LTNTBlock(BlockBehaviour.Properties properties, @Nullable Supplier<EntityType<PrimedLTNT>> TNT, boolean randomizedFuseUponExploded) {
 		super(properties);
 		this.TNT = TNT;
 		this.randomizedFuseUponExploded = randomizedFuseUponExploded;

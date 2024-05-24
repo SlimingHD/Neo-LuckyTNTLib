@@ -3,12 +3,12 @@ package luckytntlib.block;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
 import luckytntlib.entity.LivingPrimedLTNT;
 import luckytntlib.entity.PrimedLTNT;
-import luckytntlib.registry.DeferredEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -36,10 +36,10 @@ import net.minecraft.world.level.storage.loot.LootParams;
 public class LivingLTNTBlock extends LTNTBlock{
 
 	@Nullable
-	protected DeferredEntity<EntityType<LivingPrimedLTNT>> TNT;
+	protected Supplier<EntityType<LivingPrimedLTNT>> TNT;
 	protected Random random = new Random();
 	
-	public LivingLTNTBlock(BlockBehaviour.Properties properties, @Nullable DeferredEntity<EntityType<LivingPrimedLTNT>> TNT, boolean randomizedFuseUponExploded) {
+	public LivingLTNTBlock(BlockBehaviour.Properties properties, @Nullable Supplier<EntityType<LivingPrimedLTNT>> TNT, boolean randomizedFuseUponExploded) {
 		super(properties, null, randomizedFuseUponExploded);
 		this.TNT = TNT;
 	}
