@@ -3,14 +3,12 @@ package luckytntlib;
 import com.mojang.datafixers.util.Pair;
 
 import luckytntlib.block.LTNTBlock;
-import luckytntlib.client.gui.ConfigScreen;
+import luckytntlib.client.ClientAccess;
 import luckytntlib.config.LuckyTNTLibConfigs;
 import luckytntlib.entity.LTNTMinecart;
 import luckytntlib.item.LDynamiteItem;
 import luckytntlib.item.LTNTMinecartItem;
 import luckytntlib.registry.RegistryHelper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
@@ -28,6 +26,7 @@ import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -37,18 +36,16 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 @Mod(LuckyTNTLib.MODID)
-public class LuckyTNTLib
-{
+public class LuckyTNTLib {
     public static final String MODID = "luckytntlib";
-    public LuckyTNTLib(IEventBus bus, ModContainer container) {
+    
+    public LuckyTNTLib(IEventBus bus, Dist dist, ModContainer container) {
         bus.addListener(this::commonSetup);
         LuckyTNTLibConfigs.registerCommonConfig(container);
-        container.registerExtensionPoint(IConfigScreenFactory.class, new IConfigScreenFactory(){		
-			@Override
-			public Screen createScreen(Minecraft mc, Screen screen) {
-				return new ConfigScreen();
-			}
-		});
+        
+        if(dist.isClient()) {
+        	container.registerExtensionPoint(IConfigScreenFactory.class, ClientAccess.getScreenFactory());
+        }
     }
     
     private void commonSetup(final FMLCommonSetupEvent event) {
