@@ -38,10 +38,9 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * 
  * The RegistryHelper offers many methods with varying complexity for each important part of the TNT/Dynamite/TNT Minecart registering 
- * and even allows easy registration of {@link DispenseItemBehavior} where possible.
- * On top of all this it also saves List of TNT, dynamite and minecarts in a {@link HashMap} with the corresponding string assigned while registering.
+ * and even allows easy registration of {@link DispenseItemBehavior} wherever possible.
+ * On top of all this it also saves Lists of TNT, dynamite and minecarts in a {@link HashMap} with the corresponding string assigned while registering.
  * These lists can be used to simply add the items into a tab or pass the whole list to the {@link LuckyTNTBlock}, {@link LuckyDynamiteItem} and {@link LuckyTNTMinecart} respectively.
  */
 public class RegistryHelper {
@@ -102,7 +101,7 @@ public class RegistryHelper {
 	 * @param registryName  the registry name of this TNT (for block and for item)
 	 * @param TNT  the {@link PrimedLTNT} that is passed to this block and spawned when the block is ignited
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#TNTLists} and {@link RegistryHelper#creativeTabItemLists}
-	 * @return {@link RegistryObject} of a {@link LTNTBlock}
+	 * @return {@link DeferredBlock} of a {@link LTNTBlock}
 	 */
 	public DeferredBlock<LTNTBlock> registerTNTBlock(String registryName, Supplier<EntityType<PrimedLTNT>> TNT, String tab){
 		return registerTNTBlock(registryName, TNT, tab, MapColor.COLOR_RED, true);
@@ -114,7 +113,7 @@ public class RegistryHelper {
 	 * @param TNT  the {@link PrimedLTNT} that is passed to this block and spawned when the block is ignited
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#TNTLists} and {@link RegistryHelper#creativeTabItemLists}
 	 * @param randomizedFuseUponExploded  whether or not the TNT should have a random fuse based upon the default fuse when removed by another explosion
-	 * @return {@link RegistryObject} of a {@link LTNTBlock}
+	 * @return {@link DeferredBlock} of a {@link LTNTBlock}
 	 */
 	public DeferredBlock<LTNTBlock> registerTNTBlock(String registryName, Supplier<EntityType<PrimedLTNT>> TNT, String tab, boolean randomizedFuseUponExploded){
 		return registerTNTBlock(registryName, TNT, tab, MapColor.COLOR_RED, randomizedFuseUponExploded);
@@ -127,7 +126,7 @@ public class RegistryHelper {
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#TNTLists} and {@link RegistryHelper#creativeTabItemLists}
 	 * @param color  the color the block will have on the map
 	 * @param randomizedFuseUponExploded  whether or not the TNT should have a random fuse based upon the default fuse when removed by another explosion
-	 * @return {@link RegistryObject} of a {@link LTNTBlock}
+	 * @return {@link DeferredBlock} of a {@link LTNTBlock}
 	 */
 	public DeferredBlock<LTNTBlock> registerTNTBlock(String registryName, Supplier<EntityType<PrimedLTNT>> TNT, String tab, MapColor color, boolean randomizedFuseUponExploded){
 		return registerTNTBlock(TNT, new TNTBlockRegistryData.Builder(registryName).tab(tab).color(color).randomizedFuseUponExploded(randomizedFuseUponExploded).build());
@@ -137,7 +136,7 @@ public class RegistryHelper {
 	 * Registers a new {@link LTNTBlock}
 	 * @param TNT  the {@link PrimedLTNT} that is passed to this block and spawned when the block is ignited
 	 * @param blockData  all the information that a TNT block may need, e.g. registry name and color, contained in an object
-	 * @return {@link RegistryObject} of a {@link LTNTBlock}
+	 * @return {@link DeferredBlock} of a {@link LTNTBlock}
 	 */
 	public DeferredBlock<LTNTBlock> registerTNTBlock(Supplier<EntityType<PrimedLTNT>> TNT, TNTBlockRegistryData blockData){
 		return registerTNTBlock(blockRegistry, itemRegistry, () -> new LTNTBlock(BlockBehaviour.Properties.of().mapColor(blockData.getColor()).sound(SoundType.GRASS), TNT, blockData.randomizedFuseUponExploded()), blockData);
@@ -149,7 +148,7 @@ public class RegistryHelper {
 	 * @param itemRegistry  the registry in which the block item is being registered into
 	 * @param TNTBlock  the TNT block that is being registered
 	 * @param blockData  all the information that a TNT block may need, e.g. registry name and color, contained in an object
-	 * @return {@link RegistryObject} of a {@link LTNTBlock}
+	 * @return {@link DeferredBlock} of a {@link LTNTBlock}
 	 */
 	public DeferredBlock<LTNTBlock> registerTNTBlock(DeferredRegister.Blocks blockRegistry, @Nullable DeferredRegister.Items itemRegistry, Supplier<LTNTBlock> TNTBlock, TNTBlockRegistryData blockData){
 		DeferredBlock<LTNTBlock> block = blockRegistry.register(blockData.getRegistryName(), TNTBlock);
@@ -189,7 +188,7 @@ public class RegistryHelper {
 	 * @param registryName  the registry name of this TNT (for block and for item)
 	 * @param TNT  the {@link LivingPrimedLTNT} that is passed to this block and spawned when the block is ignited
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#TNTLists} and {@link RegistryHelper#creativeTabItemLists}
-	 * @return {@link RegistryObject} of a {@link LTNTBlock}
+	 * @return {@link DeferredBlock} of a {@link LTNTBlock}
 	 */
 	public DeferredBlock<LTNTBlock> registerLivingTNTBlock(String registryName, Supplier<EntityType<LivingPrimedLTNT>> TNT, String tab){
 		return registerLivingTNTBlock(registryName, TNT, tab, MapColor.COLOR_RED, true);
@@ -201,7 +200,7 @@ public class RegistryHelper {
 	 * @param TNT  the {@link LivingPrimedLTNT} that is passed to this block and spawned when the block is ignited
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#TNTLists} and {@link RegistryHelper#creativeTabItemLists}
 	 * @param randomizedFuseUponExploded  whether or not the TNT should have a random fuse based upon the default fuse when removed by another explosion
-	 * @return {@link RegistryObject} of a {@link LTNTBlock}
+	 * @return {@link DeferredBlock} of a {@link LTNTBlock}
 	 */
 	public DeferredBlock<LTNTBlock> registerLivingTNTBlock(String registryName, Supplier<EntityType<LivingPrimedLTNT>> TNT, String tab, boolean randomizedFuseUponExploded){
 		return registerLivingTNTBlock(registryName, TNT, tab, MapColor.COLOR_RED, randomizedFuseUponExploded);
@@ -214,7 +213,7 @@ public class RegistryHelper {
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#TNTLists} and {@link RegistryHelper#creativeTabItemLists}
 	 * @param color  the color the block will have on the map
 	 * @param randomizedFuseUponExploded  whether or not the TNT should have a random fuse based upon the default fuse when removed by another explosion
-	 * @return {@link RegistryObject} of a {@link LTNTBlock}
+	 * @return {@link DeferredBlock} of a {@link LTNTBlock}
 	 */
 	public DeferredBlock<LTNTBlock> registerLivingTNTBlock(String registryName, Supplier<EntityType<LivingPrimedLTNT>> TNT, String tab, MapColor color, boolean randomizedFuseUponExploded){
 		return registerLivingTNTBlock(TNT, new TNTBlockRegistryData.Builder(registryName).tab(tab).color(color).randomizedFuseUponExploded(randomizedFuseUponExploded).build());
@@ -224,7 +223,7 @@ public class RegistryHelper {
 	 * Registers a new {@link LivingLTNTBlock}
 	 * @param TNT  the {@link LivingPrimedLTNT} that is passed to this block and spawned when the block is ignited
 	 * @param blockData  all the information that a TNT block may need, e.g. registry name and color, contained in an object
-	 * @return {@link RegistryObject} of a {@link LTNTBlock}
+	 * @return {@link DeferredBlock} of a {@link LTNTBlock}
 	 */
 	public DeferredBlock<LTNTBlock> registerLivingTNTBlock(Supplier<EntityType<LivingPrimedLTNT>> TNT, TNTBlockRegistryData blockData){
 		return registerLivingTNTBlock(blockRegistry, itemRegistry, () -> new LivingLTNTBlock(BlockBehaviour.Properties.of().mapColor(blockData.getColor()).sound(SoundType.GRASS), TNT, blockData.randomizedFuseUponExploded()), blockData);
@@ -236,7 +235,7 @@ public class RegistryHelper {
 	 * @param itemRegistry  the registry in which the block item is being registered into
 	 * @param TNTBlock  the living TNT block that is being registered
 	 * @param blockData  all the information that a TNT block may need, e.g. registry name and color, contained in an object
-	 * @return {@link RegistryObject} of a {@link LTNTBlock}
+	 * @return {@link DeferredBlock} of a {@link LTNTBlock}
 	 */
 	public DeferredBlock<LTNTBlock> registerLivingTNTBlock(DeferredRegister.Blocks blockRegistry, @Nullable DeferredRegister.Items itemRegistry, Supplier<LivingLTNTBlock> TNTBlock, TNTBlockRegistryData blockData){
 		DeferredBlock<LTNTBlock> block = blockRegistry.register(blockData.getRegistryName(), () -> ((LTNTBlock)TNTBlock.get()));
@@ -275,7 +274,7 @@ public class RegistryHelper {
 	 * @param registryName  the registry name of this dynamite item
 	 * @param dynamiteSupplier  the dynamite item which is being registered
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#dynamiteLists} and {@link RegistryHelper#creativeTabItemLists}
-	 * @return {@link RegistryObject} of a {@link LDynamiteItem}
+	 * @return {@link DeferredItem} of a {@link LDynamiteItem}
 	 */
 	public DeferredItem<LDynamiteItem> registerDynamiteItem(String registryName, Supplier<LDynamiteItem> dynamiteSupplier, String tab){
 		return registerDynamiteItem(registryName, dynamiteSupplier, tab, true, true);
@@ -288,7 +287,7 @@ public class RegistryHelper {
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#dynamiteLists} and {@link RegistryHelper#creativeTabItemLists}
 	 * @param addToLists  whether or not this dynamite should be added to {@link RegistryHelper#dynamiteLists} or not
 	 * @param addDispenseBehavior  whether or not a {@link DispenseItemBehavior} should be registered or not
-	 * @return {@link RegistryObject} of a {@link LDynamiteItem}
+	 * @return {@link DeferredItem} of a {@link LDynamiteItem}
 	 */
 	public DeferredItem<LDynamiteItem> registerDynamiteItem(String registryName, Supplier<LDynamiteItem> dynamiteSupplier, String tab, boolean addToLists, boolean addDispenseBehavior){
 		return registerDynamiteItem(itemRegistry, registryName, dynamiteSupplier, tab, addToLists, addDispenseBehavior);
@@ -299,7 +298,7 @@ public class RegistryHelper {
 	 * @param registryName  the registry name of this dynamite item
 	 * @param dynamite  the {@link LExplosiveProjectile} that is passed to this item and thrown upon right clicking the item
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#dynamiteLists} and {@link RegistryHelper#creativeTabItemLists}
-	 * @return {@link RegistryObject} of a {@link LDynamiteItem}
+	 * @return {@link DeferredItem} of a {@link LDynamiteItem}
 	 */
 	public DeferredItem<LDynamiteItem> registerDynamiteItemViaProjectile(String registryName, Supplier<EntityType<LExplosiveProjectile>> dynamite, String tab){
 		return registerDynamiteItem(registryName, () -> new LDynamiteItem(new Item.Properties(), dynamite), tab);
@@ -313,7 +312,7 @@ public class RegistryHelper {
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#dynamiteLists} and {@link RegistryHelper#creativeTabItemLists}
 	 * @param addToLists  whether or not this dynamite should be added to {@link RegistryHelper#dynamiteLists} or not
 	 * @param addDispenseBehavior  whether or not a {@link DispenseItemBehavior} should be registered or not
-	 * @return {@link RegistryObject} of a {@link LDynamiteItem}
+	 * @return {@link DeferredItem} of a {@link LDynamiteItem}
 	 */
 	public DeferredItem<LDynamiteItem> registerDynamiteItem(DeferredRegister.Items itemRegistry, String registryName, Supplier<LDynamiteItem> dynamiteSupplier, String tab, boolean addToLists, boolean addDispenseBehavior){
 		DeferredItem<LDynamiteItem> item = itemRegistry.register(registryName, dynamiteSupplier);		
@@ -340,7 +339,7 @@ public class RegistryHelper {
 	 * @param registryName  the registry name of this minecart item
 	 * @param TNT  the {@link LTNTMinecart} that is passed to this item and thrown
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#minecartLists} and {@link RegistryHelper#creativeTabItemLists}
-	 * @return {@link RegistryObject} of a {@link LTNTMinecartItem}
+	 * @return {@link DeferredItem} of a {@link LTNTMinecartItem}
 	 */
 	public DeferredItem<LTNTMinecartItem> registerTNTMinecartItem(String registryName, Supplier<Supplier<EntityType<LTNTMinecart>>> TNT, String tab){
 		return registerTNTMinecartItem(registryName, () -> new LTNTMinecartItem(new Item.Properties().stacksTo(1), TNT), tab, true, true);
@@ -353,7 +352,7 @@ public class RegistryHelper {
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#minecartLists} and {@link RegistryHelper#creativeTabItemLists}
 	 * @param addToLists  whether or not this minecart should be added to {@link RegistryHelper#dynamiteLists} or not
 	 * @param addDispenseBehavior  whether or not a {@link DispenseItemBehavior} should be registered or not
-	 * @return {@link RegistryObject} of a {@link LTNTMinecartItem}
+	 * @return {@link DeferredItem} of a {@link LTNTMinecartItem}
 	 */
 	public DeferredItem<LTNTMinecartItem> registerTNTMinecartItem(String registryName, Supplier<LTNTMinecartItem> minecartSupplier, String tab, boolean addToLists, boolean addDispenseBehavior){
 		return registerTNTMinecartItem(itemRegistry, registryName, minecartSupplier, tab, addToLists, addDispenseBehavior);
@@ -367,7 +366,7 @@ public class RegistryHelper {
 	 * @param tab  the string which is passed as a key to {@link RegistryHelper#minecartLists} and {@link RegistryHelper#creativeTabItemLists}
 	 * @param addToLists  whether or not this minecart should be added to {@link RegistryHelper#dynamiteLists} or not
 	 * @param addDispenseBehavior  whether or not a {@link DispenseItemBehavior} should be registered or not
-	 * @return {@link RegistryObject} of a {@link LTNTMinecartItem}
+	 * @return {@link DeferredItem} of a {@link LTNTMinecartItem}
 	 */
 	public DeferredItem<LTNTMinecartItem> registerTNTMinecartItem(DeferredRegister.Items itemRegistry, String registryName, Supplier<LTNTMinecartItem> minecartSupplier, String tab, boolean addToLists, boolean addDispenseBehavior){
 		DeferredItem<LTNTMinecartItem> item = itemRegistry.register(registryName, minecartSupplier);
@@ -393,7 +392,7 @@ public class RegistryHelper {
 	 * Registers a new {@link PrimedLTNT}
 	 * @param registryName  the registry name of this primed TNT
 	 * @param effect  the TNT effect this primed TNT will have
-	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link PrimedLTNT}
+	 * @return {@link Supplier} of an {@link EntityType} of a {@link PrimedLTNT}
 	 */
 	public Supplier<EntityType<PrimedLTNT>> registerTNTEntity(String registryName, PrimedTNTEffect effect){
 		return registerTNTEntity(registryName, effect, 1f, true);
@@ -405,7 +404,7 @@ public class RegistryHelper {
 	 * @param effect  the TNT effect this primed TNT will have
 	 * @param size  the size of the hitbox of this primed TNT
 	 * @param fireImmune whether or not this primed TNT can burn (visual only)
-	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link PrimedLTNT}
+	 * @return {@link Supplier} of an {@link EntityType} of a {@link PrimedLTNT}
 	 */
 	public Supplier<EntityType<PrimedLTNT>> registerTNTEntity(String registryName, PrimedTNTEffect effect, float size, boolean fireImmune){
 		return registerTNTEntity(entityRegistry, registryName, effect, size, fireImmune);
@@ -418,7 +417,7 @@ public class RegistryHelper {
 	 * @param effect  the TNT effect this primed TNT will have
 	 * @param size  the size of the hitbox of this primed TNT
 	 * @param fireImmune whether or not this primed TNT can burn (visual only)
-	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link PrimedLTNT}
+	 * @return {@link Supplier} of an {@link EntityType} of a {@link PrimedLTNT}
 	 */
 	public Supplier<EntityType<PrimedLTNT>> registerTNTEntity(DeferredRegister<EntityType<?>> entityRegistry, String registryName, PrimedTNTEffect effect, float size, boolean fireImmune){
 		if(fireImmune) {
@@ -434,7 +433,7 @@ public class RegistryHelper {
 	 * @param entityRegistry  the registry in which this primed TNT is being registered into
 	 * @param registryName  the registry name of this primed TNT
 	 * @param TNT  the primed TNT that is being registered
-	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link PrimedLTNT}
+	 * @return {@link Supplier} of an {@link EntityType} of a {@link PrimedLTNT}
 	 */
 	public Supplier<EntityType<PrimedLTNT>> registerTNTEntity(DeferredRegister<EntityType<?>> entityRegistry, String registryName, Supplier<EntityType<PrimedLTNT>> TNT){
 		return entityRegistry.register(registryName, TNT);
@@ -445,7 +444,7 @@ public class RegistryHelper {
 	 * @param registryName  the registry name of this minecart
 	 * @param TNT  the {@link PrimedLTNT} that passes the TNT effect over to this minecart
 	 * @param pickItem  the minecart item that is gotten when this minecart is middle-clicked
-	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LTNTMinecart}
+	 * @return {@link Supplier} of an {@link EntityType} of a {@link LTNTMinecart}
 	 */
 	public Supplier<EntityType<LTNTMinecart>> registerTNTMinecart(String registryName, Supplier<EntityType<PrimedLTNT>> TNT, Supplier<DeferredItem<LTNTMinecartItem>> pickItem){
 		return registerTNTMinecart(registryName, TNT, pickItem, true);
@@ -457,7 +456,7 @@ public class RegistryHelper {
 	 * @param TNT  the {@link PrimedLTNT} that passes the TNT effect over to this minecart
 	 * @param pickItem  the minecart item that is gotten when this minecart is middle-clicked
 	 * @param explodesInstantly  whether or not this minecart will fuse or explode immediately
-	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LTNTMinecart}
+	 * @return {@link Supplier} of an {@link EntityType} of a {@link LTNTMinecart}
 	 */
 	public Supplier<EntityType<LTNTMinecart>> registerTNTMinecart(String registryName, Supplier<EntityType<PrimedLTNT>> TNT, Supplier<DeferredItem<LTNTMinecartItem>> pickItem, boolean explodesInstantly){
 		return registerTNTMinecart(entityRegistry, registryName, TNT, pickItem, explodesInstantly);
@@ -470,7 +469,7 @@ public class RegistryHelper {
 	 * @param TNT  the {@link PrimedLTNT} that passes the TNT effect over to this minecart
 	 * @param pickItem  the minecart item that is gotten when this minecart is middle-clicked
 	 * @param explodesInstantly  whether or not this minecart will fuse or explode immediately
-	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LTNTMinecart}
+	 * @return {@link Supplier} of an {@link EntityType} of a {@link LTNTMinecart}
 	 */
 	public Supplier<EntityType<LTNTMinecart>> registerTNTMinecart(DeferredRegister<EntityType<?>> entityRegistry, String registryName, Supplier<EntityType<PrimedLTNT>> TNT, Supplier<DeferredItem<LTNTMinecartItem>> pickItem, boolean explodesInstantly){		
 		return entityRegistry.register(registryName, () -> EntityType.Builder.<LTNTMinecart>of((EntityType<LTNTMinecart> type, Level level) -> new LTNTMinecart(type, level, TNT, pickItem, explodesInstantly), MobCategory.MISC).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).sized(0.98f, 0.7f).build(registryName));
@@ -481,7 +480,7 @@ public class RegistryHelper {
 	 * @param entityRegistry  the registry in which this minecart is being registered into
 	 * @param registryName  the registry name of this minecart
 	 * @param minecart  the minecart that is being registered
-	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LTNTMinecart}
+	 * @return {@link Supplier} of an {@link EntityType} of a {@link LTNTMinecart}
 	 */
 	public Supplier<EntityType<LTNTMinecart>> registerTNTMinecart(DeferredRegister<EntityType<?>> entityRegistry, String registryName, Supplier<EntityType<LTNTMinecart>> minecart){		
 		return entityRegistry.register(registryName, minecart);
@@ -493,7 +492,7 @@ public class RegistryHelper {
 	 * @param effect  the TNT effect this living primed TNT will have
 	 * @param size  the size of the hitbox of this living primed TNT
 	 * @param fireImmune  whether or not this living primed TNT can burn (visual only)
-	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LivingPrimedLTNT}
+	 * @return {@link Supplier} of an {@link EntityType} of a {@link LivingPrimedLTNT}
 	 */
 	public Supplier<EntityType<LivingPrimedLTNT>> registerLivingTNTEntity(String registryName, Supplier<EntityType<LivingPrimedLTNT>> TNT){
 		return registerLivingTNTEntity(entityRegistry, registryName, TNT);
@@ -504,7 +503,7 @@ public class RegistryHelper {
 	 * @param entityRegistry  the registry in which this living primed TNT is being registered into
 	 * @param registryName  the registry name of this living primed TNT
 	 * @param TNT  the TNT that is being registered
-	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LivingPrimedLTNT}
+	 * @return {@link Supplier} of an {@link EntityType} of a {@link LivingPrimedLTNT}
 	 */
 	public Supplier<EntityType<LivingPrimedLTNT>> registerLivingTNTEntity(DeferredRegister<EntityType<?>> entityRegistry, String registryName, Supplier<EntityType<LivingPrimedLTNT>> TNT){
 		return entityRegistry.register(registryName, TNT);
@@ -514,7 +513,7 @@ public class RegistryHelper {
 	 * Registers a new {@link LExplosiveProjectile}
 	 * @param registryName  the registry name of this explosive projectile
 	 * @param effect  the TNT effect this explosive projectile will have
-	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LExplosiveProjectile}
+	 * @return {@link Supplier} of an {@link EntityType} of a {@link LExplosiveProjectile}
 	 */
 	public Supplier<EntityType<LExplosiveProjectile>> registerExplosiveProjectile(String registryName, PrimedTNTEffect effect){
 		return registerExplosiveProjectile(registryName, effect, 1f, false);
@@ -526,7 +525,7 @@ public class RegistryHelper {
 	 * @param effect  the TNT effect this explosive projectile will have
 	 * @param size  the size of the hitbox of this explosive projectile
 	 * @param fireImmune  whether or not this explosive projectile can burn (visual only)
-	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LExplosiveProjectile}
+	 * @return {@link Supplier} of an {@link EntityType} of a {@link LExplosiveProjectile}
 	 */
 	public Supplier<EntityType<LExplosiveProjectile>> registerExplosiveProjectile(String registryName, PrimedTNTEffect effect, float size, boolean fireImmune) {
 		return registerExplosiveProjectile(entityRegistry, registryName, effect, size, fireImmune);
@@ -539,7 +538,7 @@ public class RegistryHelper {
 	 * @param effect  the TNT effect this explosive projectile will have
 	 * @param size  the size of the hitbox of this explosive projectile
 	 * @param fireImmune  whether or not this explosive projectile can burn (visual only)
-	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LExplosiveProjectile}
+	 * @return {@link Supplier} of an {@link EntityType} of a {@link LExplosiveProjectile}
 	 */
 	public Supplier<EntityType<LExplosiveProjectile>> registerExplosiveProjectile(DeferredRegister<EntityType<?>> entityRegistry, String registryName, PrimedTNTEffect effect, float size, boolean fireImmune){
 		if(fireImmune) {
@@ -555,7 +554,7 @@ public class RegistryHelper {
 	 * @param entityRegistry  the registry in which this explosive projectile is being registered into
 	 * @param registryName  the registry name of this explosive projectile
 	 * @param projectile  the explosive projectile that is being registered
-	 * @return {@link RegistryObject} of an {@link EntityType} of a {@link LExplosiveProjectile}
+	 * @return {@link Supplier} of an {@link EntityType} of a {@link LExplosiveProjectile}
 	 */
 	public Supplier<EntityType<LExplosiveProjectile>> registerExplosiveProjectile(DeferredRegister<EntityType<?>> entityRegistry, String registryName, Supplier<EntityType<LExplosiveProjectile>> projectile){
 		return entityRegistry.register(registryName, projectile);

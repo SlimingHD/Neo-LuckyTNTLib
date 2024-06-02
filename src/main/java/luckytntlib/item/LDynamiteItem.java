@@ -24,7 +24,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * 
  * The LDynamiteItem is an important step in making a custom explosive projectile.
  * It can be thrown and spawns a {@link LExplosiveProjectile} similar to an egg or a snowball.
  * If a {@link DispenseItemBehavior} has been registered dispensers can also throw the dynamite.

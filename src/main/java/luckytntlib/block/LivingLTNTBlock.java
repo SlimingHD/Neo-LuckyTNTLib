@@ -28,7 +28,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 
 /**
- * 
  * The LivingLTNTBlock is a simple extension of the {@link LTNTBlock} and only serves the purpose of hosting
  * a {@link LivingPrimedLTNT} instead of a {@link PrimedLTNT}.
  * This class is necessary because Minecraft's {@link LivingEntity} is fundamentally different from {@link PrimedTnt}.

@@ -14,7 +14,6 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 /**
- * 
  * The LuckyTNTMinecart is an extension of the {@link LTNTMinecart}
  * and turns into a random {@link LTNTMinecart} of a list when fused.
  */

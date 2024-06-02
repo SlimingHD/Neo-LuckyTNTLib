@@ -18,7 +18,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * 
  * A LivingPrimedLTNT is a type of TNT designed to have health points,
  * attack damage and be able to use an AI to wander around and interact with the world,
  * while still retaining the abilities of a TNT through its {@link PrimedTNTEffect}.

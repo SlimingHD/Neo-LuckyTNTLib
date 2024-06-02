@@ -29,7 +29,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 
 /**
- * 
  * The {@link LTNTBlock} is an extension of the {@link TntBlock} and it spawns a {@link PrimedLTNT} instead of a {@link PrimedTnt}.
  * If a {@link DispenseItemBehavior} has been registered dispensers can also spawn the TNT.
  */

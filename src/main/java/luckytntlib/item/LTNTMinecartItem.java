@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraft.world.level.gameevent.GameEvent;
 
 /**
- * 
  * The LTNTMinecartItem is an important step in making a custom TNT minecart.
  * It can be used to spawn a {@link LTNTMinecart} onto rails.
  * If a {@link DispenseItemBehavior} has been registered dispensers can also spawn the minecart.

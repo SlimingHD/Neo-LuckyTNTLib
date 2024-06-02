@@ -29,9 +29,8 @@ import net.minecraft.world.phys.Vec3;
  */
 public abstract class PrimedTNTEffect{	
 	/**
-	 * 
 	 * This void is the heart of the PrimedTNTEffect. It's executed every tick on both the logical client and the logical server side 
-	 * and is slightly different for every entity given by LTL implementing {@link IExplosiveEntity}.
+	 * and is slightly different for every entity implementing {@link IExplosiveEntity} provided by this library.
 	 * <p>
 	 * Its default implementation works for all Explosives with littly complexity in their behaviour.
 	 * <p>
@@ -106,9 +105,9 @@ public abstract class PrimedTNTEffect{
 	}
 	
 	/**
-	 * This void is only executed on the logical server side by {@link PrimedTNTEffect#baseTick(IExplosiveEntity)} once the fuse hits 0.
+	 * This void is only executed on the logical server side by {@link PrimedTNTEffect#baseTick(IExplosiveEntity)} once the fuse hits 0 or another condition for an exlposion, like a projectile hitting a block, is met.
 	 * <p>
-	 * @implNote Due to synchronization inconsistencies a clientExplosion does not exist and must be implemented manually without the dependency of an entity.
+	 * @implNote Due to the entity being discarded once after this method has been executed, synchronization inconsistencies arise and a clientExplosion does therefore not exist. If you require one, it is advised to override the {@link PrimedTNTEffect#baseTick(IExplosiveEntity)} function or write independent methods
 	 * @param entity  the {@link IExplosiveEntity} this PrimedTNTEffect belongs to.
 	 */
 	public void serverExplosion(IExplosiveEntity entity) {	
@@ -123,6 +122,7 @@ public abstract class PrimedTNTEffect{
 	
 	/**
 	 * @param entity  the {@link IExplosiveEntity} this PrimedTNTEffect belongs to.
+	 * @implNote defaults to 80 (4 seconds)
 	 * @return Default Fuse of this Epxlosive Entity.
 	 */
 	public int getDefaultFuse(IExplosiveEntity entity) {
@@ -131,6 +131,7 @@ public abstract class PrimedTNTEffect{
 	
 	/**
 	 * @param entity  the {@link IExplosiveEntity} this PrimedTNTEffect belongs to.
+	 * @implNote defaults to 1f
 	 * @return Size of this entity for the renderer.
 	 */
 	public float getSize(IExplosiveEntity entity) {
@@ -138,6 +139,7 @@ public abstract class PrimedTNTEffect{
 	}
 	
 	/**
+	 * @implNote defaults to true
 	 * @return Whether or not this TNT plays an explosion sound when executing {@link PrimedTNTEffect#serverExplosion(IExplosiveEntity)}.
 	 */
 	public boolean playsSound() {
@@ -146,6 +148,7 @@ public abstract class PrimedTNTEffect{
 	
 	/**
 	 * @implNote Only used by {@link LExplosiveProjectile}!
+	 * @implNote defaults to true
 	 * @return Whether or not this Explosive Projectile explodes upon hitting a block or an entity or not
 	 */
 	public boolean explodesOnImpact() {
@@ -154,6 +157,7 @@ public abstract class PrimedTNTEffect{
 	
 	/**
 	 * @implNote Only used by {@link LExplosiveProjectile}!
+	 * @implNote defaults to false
 	 * @return Whether or not this Explosive Projectile's fuse should tick down while still in the air
 	 */
 	public boolean airFuse() {

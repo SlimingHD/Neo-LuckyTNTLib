@@ -32,8 +32,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.registries.DeferredItem;
 
-/**
- * 
+/** 
  * The LTNTMinecart is an extension of Minecraft's {@link AbstractMinecart}
  * and can hold an already existing {@link PrimedLTNT} and its {@link PrimedTNTEffect}.
  * It implements {@link IExplosiveEntity}.
